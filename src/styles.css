@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 2em;
+    padding: 0;
+    background-color: #1a1a1a;
+    background-image: url('./assets/sw-bg.webp');
+    background-blend-mode: lighten;
+    color: #fffb00;
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
