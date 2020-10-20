@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Character } from './../models/character';
+import { SwapiService } from './../swapi.service';
 
 @Component({
     selector: 'app-people',
@@ -8,9 +9,22 @@ import { Character } from './../models/character';
     styleUrls: ['./people.component.css'],
 })
 export class PeopleComponent implements OnInit {
-    people: Character[];
+    people: any;
 
-    constructor() {}
+    constructor(private swapiService: SwapiService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.getPeople();
+    }
+
+    getPeople(): void {
+        this.swapiService
+            .getPeople()
+            .subscribe((people) => this.dataLoaded(people));
+    }
+
+    private dataLoaded(people: any): void {
+        this.people = people;
+        console.log(this.people);
+    }
 }
