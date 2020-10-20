@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Character } from './../models/character';
+import { Character, People } from './../models/character';
 import { SwapiService } from './../swapi.service';
 
 @Component({
@@ -9,7 +9,10 @@ import { SwapiService } from './../swapi.service';
     styleUrls: ['./people.component.css'],
 })
 export class PeopleComponent implements OnInit {
-    people: any;
+    fetchedPeople: Character[] = [];
+    numberOfPeople = 3;
+    people: People;
+    selectedIds: number[];
 
     constructor(private swapiService: SwapiService) {}
 
@@ -20,11 +23,29 @@ export class PeopleComponent implements OnInit {
     getPeople(): void {
         this.swapiService
             .getPeople()
-            .subscribe((people) => this.dataLoaded(people));
+            .subscribe((data) => this.peopleLoaded(data));
     }
 
-    private dataLoaded(people: any): void {
-        this.people = people;
+    getSelectedPeople(): void {
+        this.selectedIds.forEach((id) =>
+            this.swapiService
+                .getCharacter(id)
+                .subscribe((character) => this.fetchedPeople.push(character))
+        );
+        console.log(this.fetchedPeople);
+    }
+
+    selectRandomId(): void {
+        this.selectedIds = [
+            ...Array(this.numberOfPeople).keys(),
+        ].map((element) => Math.floor(Math.random() * this.people.count + 1));
+        console.log(this.selectedIds);
+        this.getSelectedPeople();
+    }
+
+    private peopleLoaded(data: People): void {
+        this.people = data;
         console.log(this.people);
+        this.selectRandomId();
     }
 }
