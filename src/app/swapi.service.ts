@@ -12,10 +12,15 @@ export class SwapiService {
     constructor(private http: HttpClient) {}
 
     getPeople(): Observable<People> {
-        return this.http.get<People>(`${this.swapiUrl}/people`);
+        return this.http.get<People>(`${this.swapiUrl}/people/`);
     }
 
     getCharacter(id: number): Observable<Character> {
         return this.http.get<Character>(`${this.swapiUrl}/people/${id}/`);
+    }
+
+    getDetail(urlInstance: string): Observable<any> {
+        const detailUrl = urlInstance.slice(21);
+        return this.http.get<any>(`${this.swapiUrl}/${detailUrl}`);
     }
 }
