@@ -1,0 +1,21 @@
+.people-container {
+    display: flex;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.character-card {
+    width: 220px;
+    height: 300px;
+    margin: 20px;
+    padding: 5px 20px;
+    background-color: #1b1b1b;
+    font-family: monospace;
+    order: 3;
+    border: 3px solid #fffb00;
+    border-radius: 20px;
+}
+
+.character-card-info {
+    font-size: large;
+}

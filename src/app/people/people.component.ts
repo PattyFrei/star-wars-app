@@ -14,6 +14,10 @@ export class PeopleComponent implements OnInit {
     people: People;
     selectedIds: number[];
 
+    get arePeopleLoaded(): boolean {
+        return this.fetchedPeople.length === this.numberOfPeople;
+    }
+
     constructor(private swapiService: SwapiService) {}
 
     ngOnInit(): void {

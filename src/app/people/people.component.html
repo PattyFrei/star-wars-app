@@ -1,1 +1,32 @@
-<p>people works!</p>
+<div class="people-container" *ngIf="arePeopleLoaded">
+    <div class="character-container" *ngFor="let character of fetchedPeople">
+        <div class="character-card">
+            <h2>{{ character.name }}</h2>
+            <p class="character-card-info">
+                Height: {{ character.height }} cm<br />
+                Birth year: {{ character.birth_year }} <br />
+                Gender:
+                {{
+                    character.gender === 'n/a' ? 'no gender' : character.gender
+                }}
+                <br />
+                Weight:
+                {{
+                    character.mass === 'unknown'
+                        ? character.mass
+                        : character.mass + ' kg'
+                }}
+                <br />
+                Hair color:
+                {{
+                    character.hair_color === 'n/a'
+                        ? 'none'
+                        : character.hair_color
+                }}
+                <br />
+                Skin color: {{ character.skin_color }} <br />
+                Eye color: {{ character.eye_color }} <br />
+            </p>
+        </div>
+    </div>
+</div>
