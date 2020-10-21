@@ -44,7 +44,6 @@ export class PeopleComponent implements OnInit {
                 .getDetail(filmUrl)
                 .subscribe((data) => this.fetchedFilms.push(data.title))
         );
-        console.log(this.fetchedFilms);
     }
 
     getPeople(): void {
@@ -59,7 +58,6 @@ export class PeopleComponent implements OnInit {
                 .getCharacter(id)
                 .subscribe((character) => this.fetchedPeople.push(character))
         );
-        console.log(this.fetchedPeople);
     }
 
     getSpecies(): void {
@@ -82,13 +80,11 @@ export class PeopleComponent implements OnInit {
         this.selectedIds = [
             ...Array(this.numberOfPeople).keys(),
         ].map((element) => Math.floor(Math.random() * this.people.count + 1));
-        console.log(this.selectedIds);
         this.getSelectedPeople();
     }
 
     private peopleLoaded(data: People): void {
         this.people = data;
-        console.log(this.people);
         this.selectRandomId();
     }
 }
