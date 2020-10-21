@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     branches: 
-      - master
+      - main
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-deploy:
@@ -33,6 +33,6 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BASE_BRANCH: master
+        BASE_BRANCH: main
         BRANCH: gh-pages
         FOLDER: dist/star-wars-app
