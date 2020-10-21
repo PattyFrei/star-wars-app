@@ -1,0 +1,25 @@
+.character-detail-container {
+    width: 850px;
+    margin: 30px auto;
+}
+
+.character-details-box {
+    max-width: 790px;
+    height: 220px;
+    padding: 5px 20px;
+    margin: 0 auto;
+    background-color: #1b1b1b;
+    font-family: monospace;
+    border: 3px solid #fffb00;
+    border-radius: 20px;
+}
+
+.detail-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.film-list {
+    list-style-type: circle;
+}

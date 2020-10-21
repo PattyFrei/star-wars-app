@@ -9,6 +9,9 @@ import { Character } from './../models/character';
 })
 export class CharacterDetailComponent implements OnInit {
     @Input() character: Character;
+    @Input() species: string;
+    @Input() homeworld: string;
+    @Input() films: string[];
 
     constructor() {}
 
