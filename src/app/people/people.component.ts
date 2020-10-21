@@ -14,6 +14,9 @@ export class PeopleComponent implements OnInit {
     people: People;
     selectedCharacter: Character;
     selectedIds: number[];
+    fetchedHomeworld: string;
+    fetchedSpecies: string;
+    fetchedFilms: string[] = [];
 
     get arePeopleLoaded(): boolean {
         return this.fetchedPeople.length === this.numberOfPeople;
@@ -23,6 +26,25 @@ export class PeopleComponent implements OnInit {
 
     ngOnInit(): void {
         this.getPeople();
+    }
+
+    getHomeWorld(): void {
+        const parsedUrl = this.selectedCharacter.homeworld.toString();
+        parsedUrl
+            ? this.swapiService
+                  .getDetail(parsedUrl)
+                  .subscribe((data) => (this.fetchedHomeworld = data.name))
+            : (this.fetchedHomeworld = 'unknown');
+    }
+
+    getFilms(): void {
+        this.fetchedFilms = [];
+        this.selectedCharacter.films.forEach((filmUrl) =>
+            this.swapiService
+                .getDetail(filmUrl)
+                .subscribe((data) => this.fetchedFilms.push(data.title))
+        );
+        console.log(this.fetchedFilms);
     }
 
     getPeople(): void {
@@ -40,8 +62,20 @@ export class PeopleComponent implements OnInit {
         console.log(this.fetchedPeople);
     }
 
+    getSpecies(): void {
+        const parsedUrl = this.selectedCharacter.species.toString();
+        parsedUrl
+            ? this.swapiService
+                  .getDetail(parsedUrl)
+                  .subscribe((data) => (this.fetchedSpecies = data.name))
+            : (this.fetchedSpecies = 'unknown');
+    }
+
     onSelect(character: Character): void {
         this.selectedCharacter = character;
+        this.getSpecies();
+        this.getHomeWorld();
+        this.getFilms();
     }
 
     selectRandomId(): void {

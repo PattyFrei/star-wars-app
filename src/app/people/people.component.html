@@ -39,4 +39,9 @@
         Details
     </button>
 </div>
-<app-character-detail [character]="selectedCharacter"></app-character-detail>
+<app-character-detail
+    [character]="selectedCharacter"
+    [species]="fetchedSpecies"
+    [homeworld]="fetchedHomeworld"
+    [films]="fetchedFilms"
+></app-character-detail>
