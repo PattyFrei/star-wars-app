@@ -12,6 +12,7 @@ export class PeopleComponent implements OnInit {
     fetchedPeople: Character[] = [];
     numberOfPeople = 3;
     people: People;
+    selectedCharacter: Character;
     selectedIds: number[];
 
     get arePeopleLoaded(): boolean {
@@ -37,6 +38,10 @@ export class PeopleComponent implements OnInit {
                 .subscribe((character) => this.fetchedPeople.push(character))
         );
         console.log(this.fetchedPeople);
+    }
+
+    onSelect(character: Character): void {
+        this.selectedCharacter = character;
     }
 
     selectRandomId(): void {
