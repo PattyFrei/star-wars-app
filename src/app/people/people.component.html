@@ -33,16 +33,12 @@
                 <li>Eye color: {{ character.eye_color }}</li>
             </ul>
         </div>
+        <div class="character-select-container">
+            <button class="character-select" (click)="onSelect(character)">
+                Details
+            </button>
+        </div>
     </div>
-</div>
-<div class="character-select-container">
-    <button
-        class="character-select"
-        *ngFor="let character of fetchedPeople"
-        (click)="onSelect(character)"
-    >
-        Details
-    </button>
 </div>
 <app-character-detail
     [character]="selectedCharacter"
