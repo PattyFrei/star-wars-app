@@ -1,0 +1,38 @@
+name: Build and Deploy
+on:
+  push:
+    branches: 
+      - main
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Node # this installs node and npm
+      uses: actions/setup-node@v1 
+      with:
+        node-version: '12.x'
+    
+    - name: Cache # this allows for re-using node_modules caching, making builds a bit faster.
+      uses: actions/cache@v2 
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node- 
+    - name: Build
+      run: |
+        npm install
+        npm run-script gh-deploy
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BASE_BRANCH: main
+        BRANCH: gh-pages
+        FOLDER: dist/star-wars-app
