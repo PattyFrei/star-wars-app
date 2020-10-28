@@ -3,31 +3,30 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Character, People } from './models/character';
+import { Character, People } from './../models/character';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SwapiService {
-    swapiUrl = 'https://swapi.dev/api';
     constructor(private http: HttpClient) {}
 
     getPeople(): Observable<People> {
         return this.http
-            .get<People>(`${this.swapiUrl}/people/`)
+            .get<People>(`api/people/`)
             .pipe(catchError(this.handleError));
     }
 
     getCharacter(id: number): Observable<Character> {
         return this.http
-            .get<Character>(`${this.swapiUrl}/people/${id}/`)
+            .get<Character>(`api/people/${id}/`)
             .pipe(catchError(this.handleError));
     }
 
     getDetail(urlInstance: string): Observable<any> {
         const detailUrl = urlInstance.slice(21);
         return this.http
-            .get<any>(`${this.swapiUrl}/${detailUrl}`)
+            .get<any>(`api/${detailUrl}`)
             .pipe(catchError(this.handleError));
     }
 
