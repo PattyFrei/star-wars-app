@@ -6,11 +6,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import { httpInterceptorProviders } from './http-interceptors/index';
 
 @NgModule({
     declarations: [AppComponent, PeopleComponent, CharacterDetailComponent],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-    providers: [],
+    providers: [httpInterceptorProviders],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
