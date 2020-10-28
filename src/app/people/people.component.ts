@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Character, People } from './../models/character';
-import { SwapiService } from './../swapi.service';
+import { SwapiService } from './../services/swapi.service';
 
 @Component({
     selector: 'app-people',
