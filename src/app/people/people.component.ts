@@ -9,17 +9,17 @@ import { SwapiService } from './../services/swapi.service';
     styleUrls: ['./people.component.css'],
 })
 export class PeopleComponent implements OnInit {
+    fetchedFilms: string[] = [];
+    fetchedHomeworld: string;
     fetchedPeople: Character[] = [];
+    fetchedSpecies: string;
     numberOfPeople = 3;
     people: People;
     selectedCharacter: Character;
     selectedIds: number[];
-    fetchedHomeworld: string;
-    fetchedSpecies: string;
-    fetchedFilms: string[] = [];
 
     get arePeopleLoaded(): boolean {
-        return this.fetchedPeople.length === this.numberOfPeople;
+        return this.fetchedPeople.length >= 1;
     }
 
     constructor(private swapiService: SwapiService) {}
@@ -29,7 +29,7 @@ export class PeopleComponent implements OnInit {
     }
 
     getHomeWorld(): void {
-        const parsedUrl = this.selectedCharacter.homeworld.toString();
+        const parsedUrl: string = this.selectedCharacter.homeworld.toString();
         parsedUrl
             ? this.swapiService
                   .getDetail(parsedUrl)
@@ -61,7 +61,7 @@ export class PeopleComponent implements OnInit {
     }
 
     getSpecies(): void {
-        const parsedUrl = this.selectedCharacter.species.toString();
+        const parsedUrl: string = this.selectedCharacter.species.toString();
         parsedUrl
             ? this.swapiService
                   .getDetail(parsedUrl)
@@ -76,7 +76,7 @@ export class PeopleComponent implements OnInit {
         this.getFilms();
     }
 
-    selectRandomId(): void {
+    selectRandomIds(): void {
         this.selectedIds = [
             ...Array(this.numberOfPeople).keys(),
         ].map((element) => Math.floor(Math.random() * this.people.count + 1));
@@ -85,6 +85,6 @@ export class PeopleComponent implements OnInit {
 
     private peopleLoaded(data: People): void {
         this.people = data;
-        this.selectRandomId();
+        this.selectRandomIds();
     }
 }
