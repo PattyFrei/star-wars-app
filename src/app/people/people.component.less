@@ -1,61 +1,55 @@
+@background-color: #1a1a1a;
+@highlight-color: #fffb00;
+@large-screen-width: 100%;
+@small-screen-width: 80%;
+
 .people-container {
     display: flex;
     justify-content: space-around;
     max-width: 850px;
-    width: 100%;
+    width: @large-screen-width;
     margin: 0 auto;
-}
-
-.character-card {
-    width: 220px;
-    height: 300px;
-    padding: 5px 20px;
-    background-color: #1b1b1b;
-    font-family: monospace;
-    border: 3px solid #fffb00;
-    border-radius: 20px;
-}
-
-.character-card-info {
-    font-size: large;
-}
-
-.character-select-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.character-select {
-    padding: 8px 25px;
-    font-family: monospace;
-    background-color: #fffb00;
-    border: 1px solid #fffb00;
-    cursor: pointer;
-}
-
-.character-select:hover {
-    background-color: #1b1b1b;
-    color: #fffb00;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-@media (max-width: 900px) {
-    .people-container {
+    @media (max-width: 900px) {
         display: block;
     }
     .character-card {
-        width: 80%;
-        height: 220px;
-        margin: 20px auto;
+        width: 220px;
+        height: 300px;
+        padding: 5px 20px;
+        background-color: @background-color;
+        font-family: monospace;
+        border: 3px solid @highlight-color;
+        border-radius: 20px;
+        @media (max-width: 900px) {
+            width: @small-screen-width;
+            height: 220px;
+            margin: 20px auto;
+        }
+        &-info {
+            font-size: large;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
     }
     .character-select {
-        padding: 8px 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 0;
+        &-button {
+            padding: 8px 25px;
+            font-family: monospace;
+            background-color: @highlight-color;
+            border: 1px solid @highlight-color;
+            cursor: pointer;
+            &:hover {
+                background-color: @background-color;
+                color: @highlight-color;
+            }
+            @media (max-width: 900px) {
+                padding: 8px 100px;
+            }
+        }
     }
 }

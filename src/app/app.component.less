@@ -1,17 +1,17 @@
+@text-color: #1a1a1a;
+@text-shadow: #fffb00;
+
 .title-container {
     max-width: 100%;
     display: flex;
     justify-content: space-around;
-}
-
-h1 {
-    color: #1a1a1a;
-    font-size: 50px;
-    text-shadow: -1px 0 #fffb00, 0 1px #fffb00, 1px 0 #fffb00, 0 -1px #fffb00;
-}
-
-@media (max-width: 900px) {
     h1 {
-        font-size: 40px;
+        color: @text-color;
+        font-size: 50px;
+        text-shadow: -1px 0 @text-shadow, 0 1px @text-shadow, 1px 0 @text-shadow,
+            0 -1px @text-shadow;
+        @media (max-width: 900px) {
+            font-size: 40px;
+        }
     }
 }
