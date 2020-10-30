@@ -1,5 +1,5 @@
 <div class="people-container" *ngIf="arePeopleLoaded">
-    <div class="character-container" *ngFor="let character of fetchedPeople">
+    <div *ngFor="let character of fetchedPeople">
         <div class="character-card">
             <h2>{{ character.name }}</h2>
             <ul class="character-card-info">
@@ -33,8 +33,11 @@
                 <li>Eye color: {{ character.eye_color }}</li>
             </ul>
         </div>
-        <div class="character-select-container">
-            <button class="character-select" (click)="onSelect(character)">
+        <div class="character-select">
+            <button
+                class="character-select-button"
+                (click)="onSelect(character)"
+            >
                 Details
             </button>
         </div>
