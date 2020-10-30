@@ -1,22 +1,22 @@
-<div class="character-detail-container">
+<div class="character">
     <div class="character-details-box">
         <div class="character-details-text" *ngIf="!character">
             <p>Please select a character...</p>
         </div>
         <div class="character-details-text" *ngIf="character">
             <h2>Selected: {{ character.name }}</h2>
-            <ul class="detail-list">
-                <li *ngIf="species">Species: {{ species }}</li>
-                <li *ngIf="homeworld">Homeworld: {{ homeworld }}</li>
-                <li>
-                    Appears on:
-                    <ul class="film-list" *ngIf="films.length >= 1">
-                        <li *ngFor="let film of films">
-                            {{ film }}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </div>
+        <ul class="character-details-list">
+            <li *ngIf="species">Species: {{ species }}</li>
+            <li *ngIf="homeworld">Homeworld: {{ homeworld }}</li>
+            <li *ngIf="films.length >= 1">
+                Appears on:
+                <ul>
+                    <li *ngFor="let film of films">
+                        {{ film }}
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
