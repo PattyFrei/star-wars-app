@@ -43,9 +43,12 @@
         </div>
     </div>
 </div>
-<app-character-detail
-    [character]="selectedCharacter"
-    [species]="fetchedSpecies"
-    [homeworld]="fetchedHomeworld"
-    [films]="fetchedFilms"
-></app-character-detail>
+<div class="system-consoles">
+    <app-character-detail
+        [character]="selectedCharacter"
+        [species]="fetchedSpecies"
+        [homeworld]="fetchedHomeworld"
+        [films]="fetchedFilms"
+    ></app-character-detail>
+    <app-messages></app-messages>
+</div>

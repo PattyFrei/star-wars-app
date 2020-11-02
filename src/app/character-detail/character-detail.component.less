@@ -1,23 +1,23 @@
 @background-color: #1a1a1a;
 @border-color: #fffb00;
-@large-screen-width: 100%;
-@small-screen-width: 80%;
+@large-screen-width: 400px;
+@small-screen-width: 85%;
 
 .character {
-    max-width: @large-screen-width;
-    width: 850px;
+    width: @large-screen-width;
     margin: 30px auto;
+    @media (max-width: 900px) {
+        width: @small-screen-width;
+    }
     &-details-box {
-        max-width: @large-screen-width;
         height: 220px;
         padding: 5px 20px;
-        margin: 0 auto;
         background-color: @background-color;
         font-family: monospace;
         border: 3px solid @border-color;
         border-radius: 20px;
         @media (max-width: 900px) {
-            max-width: @small-screen-width;
+            height: 250px;
         }
     }
     &-details-list {

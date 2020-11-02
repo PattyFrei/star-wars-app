@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Character, People } from './../models/character';
 import { SwapiService } from './../services/swapi.service';
+import { MessageService } from './../services/message.service';
 
 @Component({
     selector: 'app-people',
@@ -22,7 +23,10 @@ export class PeopleComponent implements OnInit {
         return this.fetchedPeople.length >= 1;
     }
 
-    constructor(private swapiService: SwapiService) {}
+    constructor(
+        private swapiService: SwapiService,
+        private messageService: MessageService
+    ) {}
 
     ngOnInit(): void {
         this.getPeople();
@@ -71,6 +75,7 @@ export class PeopleComponent implements OnInit {
 
     onSelect(character: Character): void {
         this.selectedCharacter = character;
+        this.messageService.add(`input: selected character ${character.name}`);
         this.getSpecies();
         this.getHomeWorld();
         this.getFilms();
