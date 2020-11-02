@@ -1,0 +1,11 @@
+<div class="system">
+    <div class="system-logs">
+        <div>user @ C:</div>
+        <div *ngIf="messageService.messages.length">
+            <div *ngFor="let message of messageService.messages">
+                > {{ message }}
+            </div>
+        </div>
+        <div>> _</div>
+    </div>
+</div>
