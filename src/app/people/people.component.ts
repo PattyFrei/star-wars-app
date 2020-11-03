@@ -75,16 +75,16 @@ export class PeopleComponent implements OnInit {
 
     onSelect(character: Character): void {
         this.selectedCharacter = character;
-        this.messageService.add(`input: selected character ${character.name}`);
+        this.messageService.add(`user: selected ${character.name}`);
         this.getSpecies();
         this.getHomeWorld();
         this.getFilms();
     }
 
     selectRandomIds(): void {
-        this.selectedIds = [
-            ...Array(this.numberOfPeople).keys(),
-        ].map((element) => Math.floor(Math.random() * this.people.count + 1));
+        this.selectedIds = [...Array(this.numberOfPeople).keys()].map((_) =>
+            Math.floor(Math.random() * this.people.count + 1)
+        );
         this.getSelectedPeople();
     }
 
