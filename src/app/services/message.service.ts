@@ -4,13 +4,14 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class MessageService {
+    maxMessageLength = 12;
     messages: string[] = [];
 
     constructor() {}
 
     add(message: string): void {
-        if (this.messages.length >= 11) {
-            this.messages = this.messages.slice(1, 11);
+        if (this.messages.length >= this.maxMessageLength) {
+            this.messages = this.messages.slice(1, this.maxMessageLength);
         }
         this.messages.push(message);
     }

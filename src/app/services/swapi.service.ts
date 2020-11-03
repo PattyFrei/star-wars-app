@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Character, People } from './../models/character';
 import { MessageService } from './message.service';
@@ -15,19 +16,36 @@ export class SwapiService {
     ) {}
 
     getPeople(): Observable<People> {
-        this.log('available characters fetched');
-        return this.http.get<People>(`api/people/`);
+        return this.http.get<People>(`api/people/`).pipe(
+            tap((people: People) =>
+                this.log(`${people.count} characters fetched`)
+            ),
+            catchError(
+                this.handleError<People>('fetching available characters')
+            )
+        );
     }
 
     getCharacter(id: number): Observable<Character> {
-        this.log('character profile fetched');
-        return this.http.get<Character>(`api/people/${id}/`);
+        return this.http.get<Character>(`api/people/${id}/`).pipe(
+            tap((_) => this.log(`character profile ${id} fetched`)),
+            catchError(this.handleError<Character>(`fetching character ${id}`))
+        );
     }
 
     getDetail(urlInstance: string): Observable<any> {
         const urlPath: string = urlInstance.slice(21);
-        this.log('character detail fetched');
-        return this.http.get<any>(`api/${urlPath}`);
+        return this.http.get<any>(`api/${urlPath}`).pipe(
+            tap((_) => this.log('character detail fetched')),
+            catchError(this.handleError<any>('fetching character detail'))
+        );
+    }
+
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+            this.log(`error ${operation}: ${error.error.detail}`);
+            return of(result as T);
+        };
     }
 
     private log(message: string): void {
