@@ -6,10 +6,10 @@
         <div class="character-details-text" *ngIf="character">
             <h2>Selected: {{ character.name }}</h2>
         </div>
-        <ul class="character-details-list" *ngIf="character">
+        <ul class="character-details-list" *ngIf="areDetailsLoaded">
             <li>Species: {{ hasSpecies ? species.name : 'unknown' }}</li>
             <li>Homeworld: {{ hasHomeworld ? homeworld.name : 'unknown' }}</li>
-            <li *ngIf="films">
+            <li>
                 Appears on:
                 <ul>
                     <li *ngFor="let film of films">
