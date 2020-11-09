@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Character, People } from './../models/character';
+import { Character, People, Planet, Species } from '../models';
 import { SwapiService } from './../services/swapi.service';
 import { MessageService } from './../services/message.service';
 
@@ -10,10 +10,12 @@ import { MessageService } from './../services/message.service';
     styleUrls: ['./people.component.less'],
 })
 export class PeopleComponent implements OnInit {
+    hasHomeworld: boolean;
+    hasSpecies: boolean;
     fetchedFilms: string[] = [];
-    fetchedHomeworld: string;
+    fetchedHomeworld: Planet;
     fetchedPeople: Character[] = [];
-    fetchedSpecies: string;
+    fetchedSpecies: Species;
     numberOfPeople = 3;
     people: People;
     selectedCharacter: Character;
@@ -32,13 +34,18 @@ export class PeopleComponent implements OnInit {
         this.getPeople();
     }
 
-    getHomeWorld(): void {
-        const parsedUrl: string = this.selectedCharacter.homeworld.toString();
-        parsedUrl
-            ? this.swapiService
-                  .getDetail(parsedUrl)
-                  .subscribe((data) => (this.fetchedHomeworld = data.name))
-            : (this.fetchedHomeworld = 'unknown');
+    getHomeworld(): void {
+        const parsedId: number = parseInt(
+            this.selectedCharacter.homeworld.toString().slice(27, -1),
+            10
+        );
+        console.log(parsedId);
+        parsedId
+            ? this.swapiService.getPlanet(parsedId).subscribe((data) => {
+                  this.hasHomeworld = true;
+                  this.fetchedHomeworld = data;
+              })
+            : (this.hasHomeworld = false);
     }
 
     getFilms(): void {
@@ -65,19 +72,24 @@ export class PeopleComponent implements OnInit {
     }
 
     getSpecies(): void {
-        const parsedUrl: string = this.selectedCharacter.species.toString();
-        parsedUrl
-            ? this.swapiService
-                  .getDetail(parsedUrl)
-                  .subscribe((data) => (this.fetchedSpecies = data.name))
-            : (this.fetchedSpecies = 'unknown');
+        const parsedId: number = parseInt(
+            this.selectedCharacter.species.toString().slice(29, -1),
+            10
+        );
+        console.log(parsedId);
+        parsedId
+            ? this.swapiService.getSpecies(parsedId).subscribe((data) => {
+                  this.hasSpecies = true;
+                  this.fetchedSpecies = data;
+              })
+            : (this.hasSpecies = false);
     }
 
     onSelect(character: Character): void {
         this.selectedCharacter = character;
         this.messageService.add(`user: selected ${character.name}`);
         this.getSpecies();
-        this.getHomeWorld();
+        this.getHomeworld();
         this.getFilms();
     }
 

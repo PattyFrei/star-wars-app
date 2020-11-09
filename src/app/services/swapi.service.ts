@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Character, People } from './../models/character';
+import { Character, People, Planet, Movie, Species } from './../models';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -38,6 +38,20 @@ export class SwapiService {
         return this.http.get<any>(`api/${urlPath}`).pipe(
             tap((_) => this.log('character detail fetched')),
             catchError(this.handleError<any>('fetching character detail'))
+        );
+    }
+
+    getPlanet(id: number): Observable<Planet> {
+        return this.http.get<Planet>(`api/planet/${id}/`).pipe(
+            tap((_) => this.log(`planet ${id} fetched`)),
+            catchError(this.handleError<Planet>(`fetching planet ${id}`))
+        );
+    }
+
+    getSpecies(id: number): Observable<Species> {
+        return this.http.get<Species>(`api/species/${id}/`).pipe(
+            tap((_) => this.log(`species ${id} fetched`)),
+            catchError(this.handleError<Species>(`fetching species ${id}`))
         );
     }
 

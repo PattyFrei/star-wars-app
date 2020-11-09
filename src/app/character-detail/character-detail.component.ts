@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Character } from './../models/character';
+import { Character, Species, Planet } from '../models';
 
 @Component({
     selector: 'app-character-detail',
@@ -9,8 +9,10 @@ import { Character } from './../models/character';
 })
 export class CharacterDetailComponent implements OnInit {
     @Input() character: Character;
-    @Input() species: string;
-    @Input() homeworld: string;
+    @Input() hasHomeworld: boolean;
+    @Input() hasSpecies: boolean;
+    @Input() species: Species;
+    @Input() homeworld: Planet;
     @Input() films: string[];
 
     constructor() {}
