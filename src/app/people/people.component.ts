@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
-import { Character, People } from './../models/character';
+import { Character, People } from '../models';
 import { SwapiService } from './../services/swapi.service';
+import { MessageService } from './../services/message.service';
 
 @Component({
     selector: 'app-people',
@@ -9,10 +10,7 @@ import { SwapiService } from './../services/swapi.service';
     styleUrls: ['./people.component.less'],
 })
 export class PeopleComponent implements OnInit {
-    fetchedFilms: string[] = [];
-    fetchedHomeworld: string;
     fetchedPeople: Character[] = [];
-    fetchedSpecies: string;
     numberOfPeople = 3;
     people: People;
     selectedCharacter: Character;
@@ -22,28 +20,13 @@ export class PeopleComponent implements OnInit {
         return this.fetchedPeople.length >= 1;
     }
 
-    constructor(private swapiService: SwapiService) {}
+    constructor(
+        private swapiService: SwapiService,
+        private messageService: MessageService
+    ) {}
 
     ngOnInit(): void {
         this.getPeople();
-    }
-
-    getHomeWorld(): void {
-        const parsedUrl: string = this.selectedCharacter.homeworld.toString();
-        parsedUrl
-            ? this.swapiService
-                  .getDetail(parsedUrl)
-                  .subscribe((data) => (this.fetchedHomeworld = data.name))
-            : (this.fetchedHomeworld = 'unknown');
-    }
-
-    getFilms(): void {
-        this.fetchedFilms = [];
-        this.selectedCharacter.films.forEach((filmUrl) =>
-            this.swapiService
-                .getDetail(filmUrl)
-                .subscribe((data) => this.fetchedFilms.push(data.title))
-        );
     }
 
     getPeople(): void {
@@ -60,26 +43,15 @@ export class PeopleComponent implements OnInit {
         );
     }
 
-    getSpecies(): void {
-        const parsedUrl: string = this.selectedCharacter.species.toString();
-        parsedUrl
-            ? this.swapiService
-                  .getDetail(parsedUrl)
-                  .subscribe((data) => (this.fetchedSpecies = data.name))
-            : (this.fetchedSpecies = 'unknown');
-    }
-
     onSelect(character: Character): void {
         this.selectedCharacter = character;
-        this.getSpecies();
-        this.getHomeWorld();
-        this.getFilms();
+        this.messageService.add(`user: selected ${character.name}`);
     }
 
     selectRandomIds(): void {
-        this.selectedIds = [
-            ...Array(this.numberOfPeople).keys(),
-        ].map((element) => Math.floor(Math.random() * this.people.count + 1));
+        this.selectedIds = [...Array(this.numberOfPeople).keys()].map((_) =>
+            Math.floor(Math.random() * this.people.count + 1)
+        );
         this.getSelectedPeople();
     }
 

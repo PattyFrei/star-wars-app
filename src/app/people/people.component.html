@@ -1,6 +1,9 @@
 <div class="people-container" *ngIf="arePeopleLoaded">
     <div *ngFor="let character of fetchedPeople">
-        <div class="character-card">
+        <div class="character-card" *ngIf="!character">
+            <h2>no data</h2>
+        </div>
+        <div class="character-card" *ngIf="character">
             <h2>{{ character.name }}</h2>
             <ul class="character-card-info">
                 <li>Height: {{ character.height }} cm</li>
@@ -33,7 +36,7 @@
                 <li>Eye color: {{ character.eye_color }}</li>
             </ul>
         </div>
-        <div class="character-select">
+        <div class="character-select" *ngIf="character">
             <button
                 class="character-select-button"
                 (click)="onSelect(character)"
@@ -43,9 +46,9 @@
         </div>
     </div>
 </div>
-<app-character-detail
-    [character]="selectedCharacter"
-    [species]="fetchedSpecies"
-    [homeworld]="fetchedHomeworld"
-    [films]="fetchedFilms"
-></app-character-detail>
+<div class="system-consoles">
+    <app-character-detail
+        [character]="selectedCharacter"
+    ></app-character-detail>
+    <app-messages></app-messages>
+</div>
