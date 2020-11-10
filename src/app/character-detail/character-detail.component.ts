@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { forkJoin, Observable, of } from 'rxjs';
 
 import { Character, Species, Planet, Movie } from '../models';
 import { SwapiService } from './../services/swapi.service';
@@ -10,27 +11,28 @@ import { SwapiService } from './../services/swapi.service';
 })
 export class CharacterDetailComponent implements OnInit, OnChanges {
     @Input() character: Character;
-    fetchedDetails: number;
+    areDetailsLoaded: boolean;
     films: Movie[];
     hasHomeworld: boolean;
     hasSpecies: boolean;
     homeworld: Planet;
     species: Species;
 
-    get areDetailsLoaded(): boolean {
-        return this.fetchedDetails >= 3;
-    }
-
     constructor(private swapiService: SwapiService) {}
 
     ngOnInit(): void {}
 
     ngOnChanges() {
+        this.areDetailsLoaded = false;
         if (this.character) {
-            this.fetchedDetails = 0;
-            this.getSpecies();
-            this.getHomeworld();
-            this.getFilms();
+            const loadAllDetails = [
+                of(this.getSpecies()),
+                of(this.getHomeworld()),
+                of(this.getFilms()),
+            ];
+            forkJoin([loadAllDetails]).subscribe((_) => {
+                this.areDetailsLoaded = true;
+            });
         }
     }
 
@@ -43,11 +45,9 @@ export class CharacterDetailComponent implements OnInit, OnChanges {
             this.swapiService.getSpecies(parsedId).subscribe((data) => {
                 this.hasSpecies = true;
                 this.species = data;
-                this.fetchedDetails++;
             });
         } else {
             this.hasSpecies = false;
-            this.fetchedDetails++;
         }
     }
 
@@ -60,11 +60,9 @@ export class CharacterDetailComponent implements OnInit, OnChanges {
             this.swapiService.getPlanet(parsedId).subscribe((data) => {
                 this.hasHomeworld = true;
                 this.homeworld = data;
-                this.fetchedDetails++;
             });
         } else {
             this.hasHomeworld = false;
-            this.fetchedDetails++;
         }
     }
 
@@ -74,7 +72,6 @@ export class CharacterDetailComponent implements OnInit, OnChanges {
             const parsedId: number = parseInt(filmUrl.slice(27, -1), 10);
             this.swapiService.getFilms(parsedId).subscribe((data) => {
                 this.films.push(data);
-                this.fetchedDetails++;
             });
         });
     }
