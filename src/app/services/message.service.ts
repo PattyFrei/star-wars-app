@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class MessageService {
-    maxMessageLength = 12;
+    maxMessageLength = 15;
     messages: string[] = [];
 
     constructor() {}
