@@ -33,16 +33,15 @@ export class SwapiService {
         );
     }
 
-    getDetail(urlInstance: string): Observable<any> {
-        const urlPath: string = urlInstance.slice(21);
-        return this.http.get<any>(`api/${urlPath}`).pipe(
-            tap((_) => this.log('character detail fetched')),
-            catchError(this.handleError<any>('fetching character detail'))
+    getFilms(id: number): Observable<Movie> {
+        return this.http.get<Movie>(`api/films/${id}/`).pipe(
+            tap((_) => this.log(`film ${id} fetched`)),
+            catchError(this.handleError<Movie>(`fetching film ${id}`))
         );
     }
 
     getPlanet(id: number): Observable<Planet> {
-        return this.http.get<Planet>(`api/planet/${id}/`).pipe(
+        return this.http.get<Planet>(`api/planets/${id}/`).pipe(
             tap((_) => this.log(`planet ${id} fetched`)),
             catchError(this.handleError<Planet>(`fetching planet ${id}`))
         );

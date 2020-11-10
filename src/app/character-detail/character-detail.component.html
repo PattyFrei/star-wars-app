@@ -8,12 +8,28 @@
         </div>
         <ul class="character-details-list" *ngIf="areDetailsLoaded">
             <li>Species: {{ hasSpecies ? species.name : 'unknown' }}</li>
+            <li *ngIf="hasSpecies">
+                Classification: {{ species.classification }}
+            </li>
+            <li *ngIf="hasSpecies">
+                Average lifespan:
+                {{
+                    species.average_lifespan === 'unknown' ||
+                    species.average_lifespan === 'indefinite'
+                        ? species.average_lifespan
+                        : species.average_lifespan + ' years'
+                }}
+            </li>
             <li>Homeworld: {{ hasHomeworld ? homeworld.name : 'unknown' }}</li>
+            <li *ngIf="hasHomeworld">
+                Homeworld climate:
+                {{ homeworld.climate }}
+            </li>
             <li>
                 Appears on:
                 <ul>
                     <li *ngFor="let film of films">
-                        {{ film }}
+                        Epi. {{ film.episode_id }}: {{ film.title }}
                     </li>
                 </ul>
             </li>
