@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import { Character, Species, Planet } from '../models';
+import { Character, Species, Planet, Movie } from '../models';
 import { SwapiService } from './../services/swapi.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { SwapiService } from './../services/swapi.service';
 export class CharacterDetailComponent implements OnInit, OnChanges {
     @Input() character: Character;
     fetchedDetails: number;
-    films: string[];
+    films: Movie[];
     hasHomeworld: boolean;
     hasSpecies: boolean;
     homeworld: Planet;
@@ -53,7 +53,7 @@ export class CharacterDetailComponent implements OnInit, OnChanges {
 
     getHomeworld(): void {
         const parsedId: number = parseInt(
-            this.character.homeworld.toString().slice(27, -1),
+            this.character.homeworld.slice(29, -1),
             10
         );
         if (parsedId) {
@@ -70,11 +70,12 @@ export class CharacterDetailComponent implements OnInit, OnChanges {
 
     getFilms(): void {
         this.films = [];
-        this.character.films.forEach((filmUrl) =>
-            this.swapiService.getDetail(filmUrl).subscribe((data) => {
-                this.films.push(data.title);
+        this.character.films.forEach((filmUrl) => {
+            const parsedId: number = parseInt(filmUrl.slice(27, -1), 10);
+            this.swapiService.getFilms(parsedId).subscribe((data) => {
+                this.films.push(data);
                 this.fetchedDetails++;
-            })
-        );
+            });
+        });
     }
 }
