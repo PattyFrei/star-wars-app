@@ -2,28 +2,35 @@
 
 ## Documentation
 
-**star-wars-app/src/app/models/character.ts**
+**star-wars-app/src/app/models/**
 
-Contains data models for people and character.
+Contains data models for people, species, planets and films.
 
-**star-wars-app/src/app/swapi.service.ts**
+**star-wars-app/src/app/services/swapi.service.ts**
 
-This service handles all http requests to `https://swapi.dev/api`. 
+This service handles all http requests to `https://swapi.dev/api`.
+
+**star-wars-app/src/app/services/message.service.ts**
+
+This service stores and adds new app messages.
 
 **star-wars-app/src/app/people/**
 
-This component is responsible for fetching data and displaying three character cards.
-It initially fetches data from `/people/`, then selects three random character IDs, 
-fetches their data from `/people/:id` and displays them on the page. When a character
-is selected it fetches relevant data from `/species/:id`, `/planets/:id` and `/films/:id`. 
-The data is then handed to the `character-detail` component.
+This component is responsible for fetching data and displaying three character
+cards. It initially fetches data from `/people/`, then selects three random
+character IDs, fetches their data from `/people/:id` and displays them on the
+page. When a character is selected it is handed to the `character-detail`
+component.
 
 **star-wars-app/src/app/character-detail/**
 
-This component is responsible for displaying detailed data for a selected character.
-This includes their species, homeworld and the movies they appeard on. 
+This component is responsible for fetching data for a selected character, this
+includes relevant data from `/species/:id`, `/planets/:id` and `/films/:id`. The
+data is then displayed in a separate box.
 
-Demo app: https://pattyfrei.github.io/star-wars-app/
+**star-wars-app/src/app/messages/**
+
+This component displays the latest app messages in a separate box.
 
 ---
 
